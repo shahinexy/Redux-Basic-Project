@@ -16,6 +16,14 @@ const initialState: InitialState = {
             dueDate: '2025-11',
             isCompleted: false,
             priority: 'High'
+        },
+        {
+            id: '12653',
+            title: 'this is New Title',
+            description: 'this is New description',
+            dueDate: '2025-11',
+            isCompleted: false,
+            priority: 'Low'
         }
     ],
     filter: 'all'
