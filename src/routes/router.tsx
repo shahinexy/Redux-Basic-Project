@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 // import Tasks from './../pages/Tasks';
 import App from "@/App";
 import Tasks from "@/pages/Tasks";
+import User from "@/pages/User";
 
 
 const routers = createBrowserRouter([
@@ -13,6 +14,10 @@ const routers = createBrowserRouter([
             {
                 index: true,
                 element: <Tasks/>
+            },
+            {
+                path: '/user',
+                element: <User/>
             }
         ]
     }
