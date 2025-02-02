@@ -1,45 +1,43 @@
 import { RootState } from "@/redux/store";
 import { ITask } from "@/types";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from "uuid";
 
 interface InitialState {
-    tasks: ITask[],
-    filter: 'all'| 'high' | 'medium'
+  tasks: ITask[];
+  filter: "all" | "high" | "medium";
 }
 
 const initialState: InitialState = {
-    tasks: [
-        {
-            id: '12334',
-            title: 'this is title',
-            description: 'this is description',
-            dueDate: '2025-11',
-            isCompleted: false,
-            priority: 'High'
-        },
-        {
-            id: '12653',
-            title: 'this is New Title',
-            description: 'this is New description',
-            dueDate: '2025-11',
-            isCompleted: false,
-            priority: 'Low'
-        }
-    ],
-    filter: 'all'
-}
+  tasks: [],
+  filter: "all",
+};
+
+type DraftData = Pick<ITask, "title" | "description" | "priority" | "dueDate">;
+
+const createTask = (payload: DraftData): ITask => {
+  return { id: nanoid(), isCompleted: false, ...payload };
+};
 
 const taskSlice = createSlice({
-    name: 'task',
-    initialState,
-    reducers: {}
-})
+  name: "task",
+  initialState,
+  reducers: {
+    addTask: (state, action: PayloadAction<ITask>) => {
+      const taskData = createTask(action.payload);
 
-export const seletTasks= (state: RootState)=>{
-    return state.todo.tasks
-}
-export const seletFilter= (state: RootState)=>{
-    return state.todo.filter
-}
+      state.tasks.push(taskData);
+    },
+  },
+});
 
-export default taskSlice.reducer
+export const seletTasks = (state: RootState) => {
+  return state.todo.tasks;
+};
+export const seletFilter = (state: RootState) => {
+  return state.todo.filter;
+};
+
+export const { addTask } = taskSlice.actions;
+
+export default taskSlice.reducer;
