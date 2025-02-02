@@ -24,17 +24,20 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addTask } from "@/redux/features/task/taskSlice";
 import { ITask } from "@/types";
+import { SeletUser } from "@/redux/features/users/userSlice";
 
 export function AddTaskModal() {
   const form = useForm();
 
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
+
+  const users = useAppSelector(SeletUser);
 
   const onSubmit: SubmitHandler<FieldValues> = (payload) => {
-    dispatch(addTask(payload as ITask))
+    dispatch(addTask(payload as ITask));
   };
   return (
     <Dialog>
@@ -93,6 +96,35 @@ export function AddTaskModal() {
                         <SelectItem value="low">Low</SelectItem>
                         <SelectItem value="medium">Medium</SelectItem>
                         <SelectItem value="high">High</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="assignTo"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Assign To</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {users.map((user) => (
+                          <SelectItem key={user.id} value={user.id}>
+                            {user.name}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </FormControl>

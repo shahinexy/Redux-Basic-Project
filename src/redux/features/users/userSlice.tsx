@@ -7,7 +7,16 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-  users: [],
+  users: [
+    {
+        id: 'sdfgrgds',
+        name: 'Sakil'
+    },
+    {
+        id: 'sahpjoadf',
+        name: 'Rakib'
+    }
+  ],
 };
 
 type DraftData = Pick<IUser, "name">;
@@ -34,6 +43,6 @@ export const SeletUser = (state: RootState) => {
   return state.users.users;
 };
 
-export const { addUser } = userSlice.actions;
+export const { addUser, removeUser } = userSlice.actions;
 
 export default userSlice.reducer;
