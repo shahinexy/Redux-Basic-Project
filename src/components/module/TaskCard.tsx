@@ -1,12 +1,17 @@
 import { ITask } from "@/types";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
+import { useAppDispatch } from "@/redux/hooks";
+import { deleteTask, toggleConpleteState } from "@/redux/features/task/taskSlice";
 
 interface IProps {
     task: ITask
 }
 
 const TaskCard = ({task}: IProps) => {
+
+  const dispatch = useAppDispatch()
+
   return (
     <div className="border border-gray-400 my-2 p-5">
       <div className="flex justify-between items-center pb-5">
@@ -16,11 +21,11 @@ const TaskCard = ({task}: IProps) => {
             "bg-yellow-500": task.priority === 'Medium',
             "bg-red-500": task.priority === 'High'
           })}></div>
-          <p>{task?.title}</p>
+          <p className={cn({'line-through': task.isCompleted})}>{task?.title}</p>
         </div>
         <div className="flex gap-3">
-            <Button>Delete</Button>
-            <input type="checkbox" name="" id="" />
+            <Button onClick={()=> dispatch(deleteTask(task.id))}>Delete</Button>
+            <input type="checkbox" checked={task.isCompleted} onClick={()=> dispatch(toggleConpleteState(task.id))} />
         </div>
       </div>
       <p>{task?.description}</p>
