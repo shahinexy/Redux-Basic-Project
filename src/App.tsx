@@ -19,12 +19,12 @@ function App() {
 
   return (
     <>
-       {/* <h2>Counter With Redux</h2>
+       <h2>Counter With Redux</h2>
       <Button onClick={()=>handleIncrement(5)}>Increment</Button>
       <div>{count}</div>
       <Button onClick={()=>handleDecrement(5)}>Decrement</Button>
 
-      <ModeToggle></ModeToggle> */}
+      <ModeToggle></ModeToggle>
       <NavBar/>
       <Outlet></Outlet>
     </>
